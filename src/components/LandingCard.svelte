@@ -1,7 +1,7 @@
 <script>
   import Button from "../components/Button.svelte";
 
-  export let source, alt, title, presentation, href, disabled;
+  export let source = null, alt = null, title = null, presentation = null, href = null, disabled = false;
 
 </script>
 
