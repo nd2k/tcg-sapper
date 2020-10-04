@@ -2,14 +2,6 @@
   import FadeTransitionWrapper from "../../components/FadeTransitionWrapper.svelte";
 </script>
 
-<style>
-  .container {
-    min-height: calc(100vh - 105px);
-  }
-</style>
-
 <FadeTransitionWrapper>
-  <div class="container">
-    <h1>Accueil</h1>
-  </div>
+  <h1>Partenaires</h1>
 </FadeTransitionWrapper>
