@@ -3,6 +3,10 @@
 
   let open; 
 
+  const unsubscribe = showMobileMenu.subscribe(value => {
+		open = value;
+  });
+
   function openSidenav() {
     showMobileMenu.set(open = !open)
   }
