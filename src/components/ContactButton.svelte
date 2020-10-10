@@ -11,6 +11,8 @@
   import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope';
   import { faCommentDots } from '@fortawesome/free-solid-svg-icons/faCommentDots';
 
+  let screenWidth;
+  let mobileWidth = 640;
   let comments = faComments;
   let phone = faPhone;
   let email = faEnvelope;
@@ -84,8 +86,8 @@
         right: 10rem;
       }
       @media only screen and (max-width: $mobile-width) {
-        width: 2rem;
-        height: 2rem;
+        width: 3rem;
+        height: 3rem;
         &.mainContact{
           bottom: 1rem;
           right: 1rem;
@@ -117,6 +119,8 @@
     color: $white;
   }
 </style>
+
+<svelte:window bind:innerWidth={screenWidth} />
 
 {#if showModal}
 <Modal title="Contactez-nous" on:closeModal={() => showModal = false}>
@@ -187,5 +191,29 @@
       </a>
     </button>
   {/if}
+
+  {#if show && screenWidth < mobileWidth}
+  <button class="emailContact" transition:fly="{{duration: 300, x: 0, y: 25, opacity: 0}}">
+    <a 
+      href="mailto:nicolas.decat@gmail.com"
+      on:click={() => { show = !show}} >
+      <Icon class="icon" icon = {email} />
+    </a>
+  </button>
+  <button 
+      class="formContact" 
+      transition:fly="{{duration: 300, x: 25, y: 25, opacity: 0}}"
+      on:click={() => showModal = !showModal}
+      on:click={() => { show = !show}}>
+    <Icon class="icon" icon = {commentDots} />
+  </button>
+  <button class="phoneContact" transition:fly="{{duration: 300, x: 25, y: 0, opacity: 0}}">
+    <a 
+      href="tel:+32499602548"
+      on:click={() => { show = !show}} >
+      <Icon class="icon" icon = {phone} />
+    </a>
+  </button>
+{/if}
   
 </div>
