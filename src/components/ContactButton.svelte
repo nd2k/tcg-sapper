@@ -168,7 +168,7 @@
   <button class="mainContact" on:click={() => { show = !show}}>
     <Icon class="icon" icon = {comments} />
   </button>
-  {#if show}
+  {#if show && screenWidth > mobileWidth}
     <button class="emailContact" transition:fly="{{duration: 500, x: 0, y: 100, opacity: 0}}">
       <a 
         href="mailto:nicolas.decat@gmail.com"
