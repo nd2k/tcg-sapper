@@ -61,7 +61,6 @@
       border-radius: 50%;
       z-index: 100;
       color: $white;
-      font-size: 1rem;
       text-transform: uppercase;
       cursor: pointer;
       outline: none;
@@ -77,17 +76,40 @@
         right: 2rem;
       }
       &.formContact {
-        bottom: 7.5rem;
-        right: 7.5rem;
+        bottom: 8rem;
+        right: 8rem;
       }
       &.phoneContact {
         bottom: 2rem;
         right: 10rem;
       }
+      @media only screen and (max-width: $mobile-width) {
+        width: 2rem;
+        height: 2rem;
+        &.mainContact{
+          bottom: 1rem;
+          right: 1rem;
+        }
+        &.emailContact {
+          bottom: 5rem;
+          right: 1rem;
+        }
+        &.formContact {
+          bottom: 4rem;
+          right: 4rem;
+        }
+        &.phoneContact {
+          bottom: 1rem;
+          right: 5rem;
+        }
+      }
     }
   }
   div :global(.icon) {
     font-size: 2rem;
+    @media only screen and (max-width: $mobile-width) {
+      font-size: 1rem;
+    }
   }
 
   a :global() {
@@ -144,18 +166,23 @@
   </button>
   {#if show}
     <button class="emailContact" transition:fly="{{duration: 500, x: 0, y: 100, opacity: 0}}">
-      <a href="mailto:nicolas.decat@gmail.com">
+      <a 
+        href="mailto:nicolas.decat@gmail.com"
+        on:click={() => { show = !show}} >
         <Icon class="icon" icon = {email} />
       </a>
     </button>
     <button 
         class="formContact" 
         transition:fly="{{duration: 500, x: 100, y: 100, opacity: 0}}"
-        on:click={() => showModal = !showModal}>
+        on:click={() => showModal = !showModal}
+        on:click={() => { show = !show}}>
       <Icon class="icon" icon = {commentDots} />
     </button>
     <button class="phoneContact" transition:fly="{{duration: 500, x: 100, y: 0, opacity: 0}}">
-      <a href="tel:+32499602548">
+      <a 
+        href="tel:+32499602548"
+        on:click={() => { show = !show}} >
         <Icon class="icon" icon = {phone} />
       </a>
     </button>
