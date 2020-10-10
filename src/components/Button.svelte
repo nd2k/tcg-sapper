@@ -19,6 +19,7 @@
     width: 8rem; 
     font-weight: 600;
     font-size: 1.2rem;
+    position: relative;
     &:focus {
       outline: none;
     }
@@ -42,6 +43,32 @@
     }
     &.large {
       width: 12rem;
+    }
+    &.rounded {
+      display: block;
+      border-radius: 50%;
+      width: 2rem;
+      height: 2rem;
+      margin: 1rem 1rem 0 0;
+
+    }
+    &.outline {
+      background: transparent;
+      color: $red;
+      box-shadow: none;
+    }
+
+    &.outline:hover,
+    &.outline:active {
+      background: #ffc7de;
+      box-shadow: none;
+    }
+
+    &.outline:disabled,
+    &.outline:disabled:hover,
+    &.outline:disabled:active {
+      background: transparent;
+      color: #ccc;
     }
   }
 </style>

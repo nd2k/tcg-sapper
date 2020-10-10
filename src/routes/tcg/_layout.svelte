@@ -2,6 +2,7 @@
   import Navbar from "../../components/Navbar.svelte";
   import Sidenav from "../../components/Sidenav.svelte";
   import FlyTransitionWrapper from "../../components/FlyTransitionWrapper.svelte";
+  import ContactButton from "../../components/ContactButton.svelte";
 
   export let segment;
 
@@ -28,6 +29,8 @@
   />
 
   <slot />
+
+  <ContactButton />
   
 </FlyTransitionWrapper>
 

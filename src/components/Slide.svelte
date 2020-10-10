@@ -43,7 +43,7 @@
 <div 
   class="slide" 
   class:current="{slide.selected}"
-  style="background: url('{slide.url}') no-repeat center top/cover;">
+  style="background: url('{slide.url}') no-repeat center center/cover;">
   {#if screenWidth > mobileWidth}
     <div class="content">
       <h1>{slide.title}</h1>

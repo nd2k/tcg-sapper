@@ -1,6 +1,7 @@
 <script>		
 	import LandingCard from '../components/LandingCard.svelte';
 	import TransitionWrapper from '../components/FlyTransitionWrapper.svelte';
+	import ContactButton from '../components/ContactButton.svelte';
 
 	let screenWidth;
   let mobileWidth = 640;
@@ -88,5 +89,6 @@
 			disabled=true/>
 	</TransitionWrapper>
 	{/if}
+	<ContactButton />
 </div>
 
