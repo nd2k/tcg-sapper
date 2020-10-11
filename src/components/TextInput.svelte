@@ -36,6 +36,7 @@
     textarea {
       min-height: 5rem;
       margin-bottom: 0;
+      font-family: inherit;
     }
     .form-control {
       font-size: 1rem;

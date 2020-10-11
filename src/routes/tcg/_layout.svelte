@@ -3,8 +3,28 @@
   import Sidenav from "../../components/Sidenav.svelte";
   import FlyTransitionWrapper from "../../components/FlyTransitionWrapper.svelte";
   import ContactButton from "../../components/ContactButton.svelte";
+  import Alert from '../../components/Alert.svelte';
+  import Spinner from '../../components/Spinner.svelte';
+
+  import { showAlertNotification, alertMessage, showSpinner } from '../../store';
 
   export let segment;
+
+  let message = '';
+  let status = '';
+  let loading = false;
+
+  $: showAlertNotification.subscribe(value => {
+    status = value;
+  })
+
+  $: alertMessage.subscribe(value => {
+    message = value;
+  })
+
+  $: showSpinner.subscribe(value => {
+    loading = value
+  })
 
 	let navItems = [
     { href: "tcg/.", label: "Accueil", currentAria: undefined },
@@ -15,6 +35,16 @@
     { href: "tcg/emplois", label: "Offres d'emploi", currentAria: "emplois" }
   ]
 </script>
+
+{#if status === 'success'} 
+  <Alert status={status}>
+    <p>{ message }</p>
+  </Alert>
+{:else if status === 'error'}
+  <Alert status={status}>
+    <p>{ message }</p>
+  </Alert>
+{/if}
 
 <FlyTransitionWrapper axe="x" direction="left">
   <Navbar 
@@ -27,6 +57,10 @@
     {segment} 
     {navItems}
   />
+
+  {#if loading}
+    <Spinner />
+  {/if}
 
   <slot />
 

@@ -1,8 +1,9 @@
 <script>
   import Modal from '../components/Modal.svelte';
-  import TextInput from '../components/TextInput.svelte';
-  import Button from '../components/Button.svelte';
+  import TextInput from './TextInput.svelte';
+  import Button from './Button.svelte';
   import { isEmpty, isValidEmail } from '../helpers/validations';
+  import { showAlertNotification, alertMessage, showSpinner } from '../store';
 
   import { fly } from 'svelte/transition';
   import Icon from 'fa-svelte';
@@ -20,21 +21,81 @@
   let show = false;
   let showModal = false;
   let firstNameValue = '';
-  let firstNameValueValid = false;
   let lastNameValue = '';
-  let lastNameValueValid = false;
   let emailValue = '';
-  let emailValueValid = false;
+  let phoneValue = '';
   let messageValue = '';
-  let messageValueValid = false;
+  let status = '';
+  let message = '';
+  let loading = false;
+
+  $: showAlertNotification.subscribe(value => {
+    status = value;
+  })
+
+  $: alertMessage.subscribe(value => {
+    message = value;
+  })
+
+  $: showSpinner.subscribe(value => {
+    loading = value;
+  })
 
   $: firstNameValueValid = !isEmpty(firstNameValue);
   $: lastNameValueValid = !isEmpty(lastNameValue);
   $: emailValueValid = isValidEmail(emailValue)
+  $: phoneValueValid = !isEmpty(phoneValue);
   $: messageValueValid = !isEmpty(messageValue);
+  $: formIsValid = firstNameValueValid && lastNameValueValid && emailValueValid && phoneValueValid && messageValueValid;
 
   function submitMessage() {
-    console.log(firstNameValue, lastNameValue, messageValue);
+    let dataForm = { firstNameValue, lastNameValue, emailValue, phoneValue, messageValue };
+    let url = 'sendEmail';
+    showModal = false;
+    showSpinner.set(true);
+    resetForm();
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(dataForm),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => {
+      res.json()
+      .then(function() {
+        showSpinner.set(false);
+        showAlertNotification.set('success')
+        alertMessage.set('Votre message a bien été envoyé. Nous vous répondrons dans les plus bref délais')
+        setTimeout(() => {
+          showAlertNotification.set('');
+          alertMessage.set('');
+        }, 3000);
+      })
+    })
+    .catch(error => {
+      console.log(error)
+      showSpinner.set(false);
+      showAlertNotification.set('error')
+      alertMessage.set("Un problème est survenu lors de l'envoi de votre message. Veuillez recommencer.")
+      setTimeout(() => {
+          showAlertNotification.set('');
+          alertMessage.set('');
+        }, 5000);
+    })
+  }
+
+  function resetForm() {
+    firstNameValue = '';
+    lastNameValue = '';
+    emailValue = '';
+    phoneValue= '';
+    messageValue = '';
+    firstNameValueValid = false;
+    lastNameValueValid = false;
+    emailValueValid = false;
+    phoneValueValid = false;
+    messageValueValid = false;
   }
 
 </script>
@@ -49,7 +110,7 @@
   .buttons {
     display: flex;
     align-items: center;
-    justify-content: right;
+    justify-content: center;
   }
   .contactButton {
     display: flex;
@@ -147,6 +208,13 @@
         validityMessage="L'adresse email n'est pas valide"
         valid={emailValueValid}/>
     <TextInput 
+        labelOfTextInput="Votre numéro de téléphone" 
+        idOfTextInput="phone" 
+        bindingValue="phone" 
+        on:input={event => (phoneValue = event.target.value)} 
+        validityMessage="Le champ 'téléphone' est vide"
+        valid={phoneValueValid}/>
+    <TextInput 
         typeOfInput="textarea" 
         rowsOfTextarea="5" 
         labelOfTextInput="Votre message" 
@@ -157,9 +225,9 @@
         valid={messageValueValid}/>
   </form>
   <div class="buttons">
-    <Button on:click={submitMessage}>
-      Envoyé
-    </Button>
+      <Button on:click={submitMessage} disabled={!formIsValid}>
+        Envoyé
+      </Button>
   </div>
   </Modal>
 {/if}
@@ -180,7 +248,8 @@
         class="formContact" 
         transition:fly="{{duration: 500, x: 100, y: 100, opacity: 0}}"
         on:click={() => showModal = !showModal}
-        on:click={() => { show = !show}}>
+        on:click={() => { show = !show}}
+        on:click={() => resetForm()}>
       <Icon class="icon" icon = {commentDots} />
     </button>
     <button class="phoneContact" transition:fly="{{duration: 500, x: 100, y: 0, opacity: 0}}">

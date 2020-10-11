@@ -6,7 +6,7 @@
 
   let open = false;
 
-  const unsubscribe = showMobileMenu.subscribe(value => {
+  $: showMobileMenu.subscribe(value => {
 		open = value;
   });
   

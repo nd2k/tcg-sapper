@@ -10,8 +10,6 @@
   let slideInterval;
 
   export let rotation = null, auto = null, interval = 2000;
-
-  $: console.log(rotation);
   
   export let slidesData = null;
   slidesData[current].selected = true;

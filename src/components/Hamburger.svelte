@@ -3,7 +3,7 @@
 
   let open; 
 
-  const unsubscribe = showMobileMenu.subscribe(value => {
+  $: showMobileMenu.subscribe(value => {
 		open = value;
   });
 

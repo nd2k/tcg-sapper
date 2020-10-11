@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd”>
+    <html xmlns=“https://www.w3.org/1999/xhtml”>
+      <head>
+        <title>Email reçu de Nicolas Decat</title>
+        <meta http–equiv=“Content-Type” content=“text/html; charset=UTF-8” />
+        <meta http–equiv=“X-UA-Compatible” content=“IE=edge” />
+        <meta name=“viewport” content=“width=device-width, initial-scale=1.0 “ />
+        <style>
+          body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #d3d3d3;
+          }
+          .contact {
+            background-color: white;
+            color: black;
+            border-radius: 10px;
+            border: 2px solid red;
+            margin: 1rem;
+            padding: 1rem;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+          }
+          .message {
+            background-color: white;
+            color: black;
+            border-radius: 10px;
+            border: 2px solid red;
+            margin: 1rem;
+            padding: 1rem;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="contact">
+            <h1>Le client:</h1>
+            <p>Prénom: ${data.firstNameValue}</p>
+            <p>Nom: ${data.lastNameValue}</p>
+            <p>Adresse email: <a href="mailto:${data.emailValue}">${data.emailValue}</a></p>
+            <p>Numéro de téléphone: <a href="phone:${data.phoneValue}">${data.phoneValue}</a></p>
+          </div>
+          <div class="message">
+            <h1>Message du client:</h1>
+            <p>${data.messageValue}</p>
+          </div>  
+        </div>
+      </body>
+    </html>
